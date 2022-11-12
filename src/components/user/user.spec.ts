@@ -18,7 +18,7 @@ describe('[E2E] User', function() {
           firstname: 'test',
           lastname: 'test',
           email: 'test@test.com',
-          password: '123456',
+          password: '12345678',
         });
       expect(response.statusCode).toBe(201);
     });
@@ -32,7 +32,7 @@ describe('[E2E] User', function() {
           firstname: 'test',
           lastname: 'test',
           email: 'test@test.com',
-          password: '123456',
+          password: '12345678',
         });
       expect(createUser1Response.statusCode).toBe(201);
 
