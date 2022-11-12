@@ -51,6 +51,6 @@ Any by now you should be able to go to `localhost:3000` to test that everything 
 - Adding Factories and Seeds for these models.
 
 
-### Refernces
--Boilerplate from my Session Lead <a href="https://github.com/Elshafeay/">Mohammed Elshafeay</a>:
+## Refernces
+#### Boilerplate from my Session Lead <a href="https://github.com/Elshafeay/">Mohammed Elshafeay</a>:
 - https://github.com/Elshafeay/ts-boilerplate
