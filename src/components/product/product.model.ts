@@ -14,6 +14,15 @@ class Product {
     }
   }
 
+  static async findOneByName(name: string): Promise<IProduct | null>{
+    const rows = await Common.dbFetch(Product.tableName, { name });
+    if(rows?.length){
+      return rows[0] as IProduct;
+    }else{
+      return null;
+    }
+  }
+
   static async findAll(): Promise<IProduct[]>{
     const rows = await Common.dbFetch(
       Product.tableName,
