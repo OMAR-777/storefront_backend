@@ -78,6 +78,48 @@ class UserController {
       throw new Error();
     }
   }
+
+  async createMany(req: Request, res: Response){
+    const users = req.body.Users as ICreateUser[];
+    let insertedUsers: IUserSerialized[] = [];
+    let errorUsers: [reason: string,user: ICreateUser][] = [];
+
+    for(let i=0; i<users.length; i++){
+      var userFound = await User.findOneByEmail(users[i].email);
+      if(userFound){
+        errorUsers.push(['There\'s a user with this email already!',users[i]]);
+        continue;
+      }
+
+      const hashedPassword = await Password.toHash(users[i].password);
+      users[i].password = hashedPassword;
+
+      const newUser = await User.create(users[i]);
+      if(newUser){
+        insertedUsers.push(newUser);
+      }else{
+        errorUsers.push(['Could not insert this user',users[i]]);
+      }
+
+    }
+
+    const result = {
+      insertedCount:insertedUsers.length,
+      errorCount: errorUsers.length,
+      insertedUsers,
+      errorUsers,
+    };
+
+    if(insertedUsers.length){
+      if(errorUsers.length == 0){
+        return CustomResponse.send(res, insertedUsers, 'All Users Created Successfully', 201);
+      }else{
+        return CustomResponse.send(res, result, 'Some Users Created Successfully', 201);
+      }
+    }else{
+      return CustomResponse.sendWithErrorAndData(res, result, 'No User is Created Susccessfully');
+    }
+  }
 }
 
 export default new UserController();

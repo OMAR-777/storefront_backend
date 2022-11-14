@@ -3,12 +3,14 @@ import { requireAuth } from '../../middlewares/require-auth';
 import { validateRequest } from '../../middlewares/validate-request';
 
 import UserController from './user.controller';
-import { createUserValidation, getUserValidation } from './user.schemas';
+import { createUsersValidation, createUserValidation, getUserValidation } from './user.schemas';
 
 const userRouter = (app: Express) => {
 
   app.get('/me', requireAuth, UserController.getProfile);
   app.get('/users', requireAuth, UserController.getUsers);
+  app.post('/users/createMany', requireAuth,
+    validateRequest(createUsersValidation), UserController.createMany);
   app.get('/users/:id', requireAuth, validateRequest(getUserValidation), UserController.getUser);
 
   // Auth

@@ -18,6 +18,11 @@ class CustomResponse {
     res.status(status).json(formattedResponse);
   }
 
+  sendWithErrorAndData(res:Response, data: any, message:string, status=400){
+    const formattedResponse = { status, message, data };
+    res.status(status).json(formattedResponse);
+  }
+
 }
 
 export default new CustomResponse();
