@@ -8,7 +8,6 @@ import {
 } from './order.interfaces';
 
 class Order {
-
   static ordersTableName = 'orders';
   static orderProductsTableName = 'order_products';
 
@@ -45,7 +44,7 @@ class Order {
     }
   }
   static async getByUserId(user_id: number): Promise<IOrder[]> {
-    const rows = await Common.dbFetch(Order.ordersTableName, user_id , [
+    const rows = await Common.dbFetch(Order.ordersTableName, { user_id }, [
       'id',
       'status',
       'user_id',
@@ -62,6 +61,19 @@ class Order {
     } else {
       return null;
     }
+  }
+
+  static async completeOrder(id: number): Promise<boolean> {
+    const updateQuery = await Common.dbUpdate(
+      Order.ordersTableName,
+      { status: OrderStatus.Completed },
+      { id },
+    );
+
+    if (updateQuery && updateQuery.updated) {
+      return true;
+    }
+    return false;
   }
 
   static async addOrderProduct(orderProduct: IAddOrderProduct) {

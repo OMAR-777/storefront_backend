@@ -5,7 +5,6 @@ import { validateRequest } from '../../middlewares/validate-request';
 import OrderController from './order.controller';
 import {
   addOrderProductValidation,
-  createOrderValidation,
   getOrderProductsValidation,
   getOrderValidation,
 } from './order.schemas';
@@ -13,9 +12,19 @@ import {
 const orderRouter = (app: Express) => {
   app.get('/orders', OrderController.getUserOrders);
   app.get(
+    '/orders/cart',
+    requireAuth,
+    OrderController.getUserCurrentOrder,
+  );
+  app.get(
     '/orders/:id',
     validateRequest(getOrderValidation),
-    OrderController.getUserCurrentOrder,
+    OrderController.getOrder,
+  );
+  app.get(
+    '/orders/:id/complete',
+    validateRequest(getOrderValidation),
+    OrderController.completeOrder,
   );
   app.post(
     '/orders',
