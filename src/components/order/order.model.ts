@@ -1,10 +1,14 @@
 import Common from '../../utils/common';
-import { ICreateOrder, IAddOrderProduct, IOrder, IOrderProduct } from './order.interfaces';
+import {
+  ICreateOrder,
+  IAddOrderProduct,
+  IOrder,
+  IOrderProduct,
+  OrderStatus,
+} from './order.interfaces';
 
 class Order {
-  static getAll() {
-    throw new Error('Method not implemented.');
-  }
+
   static ordersTableName = 'orders';
   static orderProductsTableName = 'order_products';
 
@@ -28,6 +32,28 @@ class Order {
     return rows as IOrder[];
   }
 
+  static async getUserActiveOrder(user_id: number): Promise<IOrder | null> {
+    const rows = await Common.dbFetch(Order.ordersTableName, {
+      user_id,
+      status: OrderStatus.Active,
+    });
+    if (rows?.length) {
+      const order = rows[0] as IOrder;
+      return order;
+    } else {
+      return null;
+    }
+  }
+  static async getByUserId(user_id: number): Promise<IOrder[]> {
+    const rows = await Common.dbFetch(Order.ordersTableName, user_id , [
+      'id',
+      'status',
+      'user_id',
+      'created_at',
+    ]);
+    return rows as IOrder[];
+  }
+
   static async create(order: ICreateOrder): Promise<IOrder | null> {
     const insertQuery = await Common.dbInsertion(Order.ordersTableName, order);
     if (insertQuery && insertQuery.inserted) {
@@ -38,8 +64,11 @@ class Order {
     }
   }
 
-  static async addOrderProduct(orderProduct: IAddOrderProduct){
-    const insertQuery = await Common.dbInsertion(Order.orderProductsTableName, orderProduct);
+  static async addOrderProduct(orderProduct: IAddOrderProduct) {
+    const insertQuery = await Common.dbInsertion(
+      Order.orderProductsTableName,
+      orderProduct,
+    );
     if (insertQuery && insertQuery.inserted) {
       const newOrder = insertQuery.data[0] as IOrder;
       return newOrder;
@@ -49,7 +78,9 @@ class Order {
   }
 
   static async getOrderProducts(order_id: number): Promise<IOrderProduct[]> {
-    const rows = await Common.dbFetch(Order.orderProductsTableName, { order_id });
+    const rows = await Common.dbFetch(Order.orderProductsTableName, {
+      order_id,
+    });
     return rows as IOrderProduct[];
   }
 }

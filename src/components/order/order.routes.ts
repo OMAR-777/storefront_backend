@@ -11,11 +11,11 @@ import {
 } from './order.schemas';
 
 const orderRouter = (app: Express) => {
-  app.get('/orders', OrderController.getOrders);
+  app.get('/orders', OrderController.getUserOrders);
   app.get(
     '/orders/:id',
     validateRequest(getOrderValidation),
-    OrderController.getOrder,
+    OrderController.getUserCurrentOrder,
   );
   app.post(
     '/orders',

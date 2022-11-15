@@ -14,6 +14,22 @@ import { JWT } from '../../utils/jwt';
 import Product from '../product/product.model';
 
 class OrderController {
+
+  async getUserCurrentOrder(req: Request, res: Response) {
+    const userId = req.user!.id;
+    const order = await Order.getUserActiveOrder(userId);
+    if (!order) {
+      throw new NotFoundError('Order Not Found!');
+    }
+    CustomResponse.send(res, { order });
+  }
+
+  async getUserOrders(req: Request, res: Response) {
+    const userId = req.user!.id;
+    const orders = await Order.getByUserId(userId);
+    CustomResponse.send(res, { orders });
+  }
+
   async getOrder(req: Request, res: Response) {
     const order = await Order.findOneById(+req.params.id);
     if (!order) {
@@ -28,7 +44,7 @@ class OrderController {
   }
 
   async create(req: Request, res: Response) {
-    //here we know that req.user is not null requireAuth is passed
+    //here we know that req.user is not null because requireAuth is passed
     const user_id = req.user!.id;
     const dataObject: ICreateOrder = { user_id, status: OrderStatus.Active };
 
