@@ -13,12 +13,6 @@ export const getOrderProductsValidation: IValidationSchema = {
   }).required(),
 };
 
-export const createOrderValidation: IValidationSchema = {
-  body: Joi.object({
-    user_id: Joi.number().required(),
-  }).required(),
-};
-
 export const addOrderProductValidation: IValidationSchema = {
   params: Joi.object({
     id: Joi.number().required(),
