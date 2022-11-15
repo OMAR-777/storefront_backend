@@ -26,13 +26,13 @@ const orderRouter = (app: Express) => {
     '/orders/:id/products',
     requireAuth,
     validateRequest(getOrderProductsValidation),
-    OrderController.getProducts,
+    OrderController.getOrderProducts,
   );
   app.post(
     '/orders/:id/products',
     requireAuth,
     validateRequest(addOrderProductValidation),
-    OrderController.addProduct,
+    OrderController.addOrderProduct,
   );
 };
 

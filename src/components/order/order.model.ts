@@ -38,7 +38,7 @@ class Order {
     }
   }
 
-  static async addProduct(orderProduct: IAddOrderProduct){
+  static async addOrderProduct(orderProduct: IAddOrderProduct){
     const insertQuery = await Common.dbInsertion(Order.orderProductsTableName, orderProduct);
     if (insertQuery && insertQuery.inserted) {
       const newOrder = insertQuery.data[0] as IOrder;

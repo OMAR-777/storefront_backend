@@ -39,9 +39,9 @@ class OrderController {
     return CustomResponse.send(res, result, 'Created Successfully', 201);
   }
 
-  async addProduct(req: Request, res: Response) {
-    //here we know that req.user is not null requireAuth is passed
-    const { order_id, product_id, quantity } = req.body;
+  async addOrderProduct(req: Request, res: Response) {
+    const { product_id, quantity } = req.body;
+    const order_id = +req.params.id;
 
     const order = Order.findOneById(order_id);
     if (!order) {
@@ -55,14 +55,14 @@ class OrderController {
 
     const dataObject: IAddOrderProduct = { product_id, order_id, quantity };
 
-    const orderProduct = await Order.addProduct(dataObject);
+    const orderProduct = await Order.addOrderProduct(dataObject);
 
-    const result = { orderProduct };
     if (orderProduct) {
+      const result = { orderProduct };
       return CustomResponse.send(
         res,
         result,
-        'Added Product Successfully',
+        'Added Order Product Successfully',
         201,
       );
     } else {
@@ -70,7 +70,7 @@ class OrderController {
     }
   }
 
-  async getProducts(req: Request, res: Response) {
+  async getOrderProducts(req: Request, res: Response) {
     //here we know that req.user is not null requireAuth is passed
     const orderId = +req.params.id;
 

@@ -20,8 +20,10 @@ export const createOrderValidation: IValidationSchema = {
 };
 
 export const addOrderProductValidation: IValidationSchema = {
+  params: Joi.object({
+    id: Joi.number().required(),
+  }).required(),
   body: Joi.object({
-    order_id: Joi.number().required(),
     product_id: Joi.number().required(),
     quantity: Joi.number().required(),
   }).required(),
