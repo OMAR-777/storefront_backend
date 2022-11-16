@@ -23,7 +23,7 @@ describe('[E2E] Product', function () {
     });
 
     // Failure scenarios
-    it('returns 401 when creating a product without logging in', async function () {
+    it('returns 401 when trying to create a product without logging in', async function () {
       // status code should be 401 `Unauthorized`
       const response = await supertest(app).post('/products').send({
         name: 'testProduct',

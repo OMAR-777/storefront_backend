@@ -76,7 +76,7 @@ class UserController {
   }
 
   async createMany(req: Request, res: Response) {
-    const users = req.body.Users as ICreateUser[];
+    const users = req.body as ICreateUser[];
     let insertedUsers: IUserSerialized[] = [];
     let errorUsers: [reason: string, user: ICreateUser][] = [];
 
