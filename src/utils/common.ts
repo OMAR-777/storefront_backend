@@ -7,6 +7,11 @@ interface InserQuery{
   inserted: number
 }
 
+interface UpdateQuery{
+  data: any,
+  updated: number
+}
+
 class Common {
 
   // Any is used here because we can't determine the object structure ahead
@@ -69,7 +74,7 @@ class Common {
 
   // Any is used here because we can't determine the object structure ahead
   // as this is used for updating different models
-  static async dbUpdate(table: string, data: any, conditions: any){
+  static async dbUpdate(table: string, data: any, conditions: any): Promise<UpdateQuery| void>{
     try{
       const [results, updated] = await sequelize.query(
         `
