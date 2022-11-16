@@ -15,6 +15,7 @@ import { JWT } from '../../utils/jwt';
 import Product from '../product/product.model';
 
 class OrderController {
+
   async getUserCurrentOrder(req: Request, res: Response) {
     const userId = req.user!.id;
     const order = await Order.getUserActiveOrder(userId);
@@ -29,18 +30,10 @@ class OrderController {
     CustomResponse.send(res, { order });
   }
 
-  async getUserOrders(req: Request, res: Response) {
+  async getUserCompletedOrders(req: Request, res: Response) {
     const userId = req.user!.id;
-    const orders = await Order.getByUserId(userId);
+    const orders = await Order.getCompletedOrdersByUserId(userId);
     CustomResponse.send(res, { orders });
-  }
-
-  async getOrder(req: Request, res: Response) {
-    const order = await Order.findOneById(+req.params.id);
-    if (!order) {
-      throw new NotFoundError('Order Not Found!');
-    }
-    CustomResponse.send(res, { order });
   }
 
   async create(req: Request, res: Response) {
@@ -54,7 +47,6 @@ class OrderController {
         `There\'s an active order (with id: ${activeOrder.id}) for this user already!`,
       );
     }
-
     const order = await Order.create(dataObject);
     if (order) {
       const result = { order };
@@ -79,7 +71,6 @@ class OrderController {
     }
 
     const dataObject: IAddOrderProduct = { product_id, order_id, quantity };
-
     const orderProduct = await Order.addOrderProduct(dataObject);
 
     if (orderProduct) {
@@ -98,7 +89,10 @@ class OrderController {
   async getOrderProducts(req: Request, res: Response) {
     //here we know that req.user is not null requireAuth is passed
     const orderId = +req.params.id;
-
+    const order = await Order.findOneById(orderId);
+    if (!order) {
+      throw new NotFoundError('Order Not Found!');
+    }
     const orderProducts = await Order.getOrderProducts(orderId);
 
     return CustomResponse.send(res, orderProducts);
@@ -131,6 +125,7 @@ class OrderController {
       throw new Error();
     }
   }
+
 }
 
 export default new OrderController();

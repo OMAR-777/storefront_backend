@@ -43,13 +43,13 @@ class Order {
       return null;
     }
   }
-  static async getByUserId(user_id: number): Promise<IOrder[]> {
-    const rows = await Common.dbFetch(Order.ordersTableName, { user_id }, [
-      'id',
-      'status',
-      'user_id',
-      'created_at',
-    ]);
+  static async getCompletedOrdersByUserId(user_id: number): Promise<IOrder[]> {
+    var status = OrderStatus.Completed;
+    const rows = await Common.dbFetch(
+      Order.ordersTableName,
+      { user_id, status },
+      ['id', 'status', 'user_id', 'created_at'],
+    );
     return rows as IOrder[];
   }
 

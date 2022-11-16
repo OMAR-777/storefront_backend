@@ -10,16 +10,11 @@ import {
 } from './order.schemas';
 
 const orderRouter = (app: Express) => {
-  app.get('/orders', OrderController.getUserOrders);
+  app.get('/orders', OrderController.getUserCompletedOrders);
   app.get(
     '/orders/cart',
     requireAuth,
     OrderController.getUserCurrentOrder,
-  );
-  app.get(
-    '/orders/:id',
-    validateRequest(getOrderValidation),
-    OrderController.getOrder,
   );
   app.get(
     '/orders/:id/complete',
