@@ -1,6 +1,10 @@
 import supertest from 'supertest';
 import app from '../../app';
-import { ICreateOrder, OrderStatus } from '../../src/components/order/order.interfaces';
+import {
+  IAddOrderProduct,
+  ICreateOrder,
+  OrderStatus,
+} from '../../src/components/order/order.interfaces';
 import { ICreateProduct } from '../../src/components/product/product.interfaces';
 import {
   ICreateUser,
@@ -47,4 +51,41 @@ async function createProduct() {
   return productId;
 }
 
-export { truncateDB, signup, createProduct };
+async function createOrder(
+  user_id: number,
+  token: string,
+  orderStatus = OrderStatus.Active,
+) {
+  const randomId = Math.floor(Math.random() * 1000);
+  const dataObject: ICreateOrder = {
+    user_id: user_id,
+    status: orderStatus,
+  };
+  const response = await supertest(app)
+    .post('/orders')
+    .set('Authorization', token)
+    .send(dataObject);
+  const orderId: number = response.body.data.order.id;
+  return orderId;
+}
+
+async function addOrderProduct(
+  token: string,
+  order_id: number,
+  product_id: number,
+  quantity = 1,
+) {
+  const randomId = Math.floor(Math.random() * 1000);
+  const dataObject = {
+    product_id,
+    quantity,
+  };
+  const response = await supertest(app)
+    .post(`/orders/${order_id}/products`)
+    .set('Authorization', token)
+    .send(dataObject);
+  const orderProduct: number = response.body.data.orderProduct.id;
+  return orderProduct;
+}
+
+export { truncateDB, signup, createProduct, createOrder, addOrderProduct };

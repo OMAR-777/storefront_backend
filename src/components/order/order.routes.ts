@@ -10,7 +10,7 @@ import {
 } from './order.schemas';
 
 const orderRouter = (app: Express) => {
-  app.get('/orders', OrderController.getUserCompletedOrders);
+  app.get('/orders', requireAuth, OrderController.getUserCompletedOrders);
   app.get(
     '/orders/cart',
     requireAuth,
@@ -18,6 +18,7 @@ const orderRouter = (app: Express) => {
   );
   app.get(
     '/orders/:id/complete',
+    requireAuth,
     validateRequest(getOrderValidation),
     OrderController.completeOrder,
   );
