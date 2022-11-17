@@ -11,10 +11,10 @@ describe('[E2E] Product', function () {
     // Success scenarios
     it('creates a product', async function () {
       // status code should be 201 `Created`
-      const authToken = await signup();
+      const {token} = await signup();
       const response = await supertest(app)
         .post('/products')
-        .set('Authorization', authToken)
+        .set('Authorization', token)
         .send({
           name: 'testProduct',
           price: 3.99,
