@@ -14,7 +14,7 @@ import {
 } from './order.interfaces';
 import { IUserSerialized } from '../user/user.interfaces';
 
-describe('[E2E] Order', function () {
+describe('[E2E] Order endpoints', function () {
   describe('Testing the create endpoint', function () {
     let orderUser: IUserSerialized;
     let authToken = '';

@@ -1,11 +1,11 @@
 export interface ICreateProduct{
   name: string,
-  price: string,
+  price: number,
 }
 
 export interface IProduct {
   id: number,
   name: string,
-  price: string,
+  price: number,
   created_at: string,
 }

@@ -3,7 +3,7 @@ import supertest from 'supertest';
 import { truncateDB, signup } from '../../../spec/utils';
 import { ICreateUser, IUserSerialized } from './user.interfaces';
 
-describe('[E2E] User', function () {
+describe('[E2E] User endpoinds', function () {
   describe('Testing the signup endpoint', function () {
     beforeEach(async () => {
       await truncateDB();
