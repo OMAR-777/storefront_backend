@@ -1,20 +1,31 @@
 import supertest from 'supertest';
 import app from '../../app';
 import {
-  IAddOrderProduct,
   ICreateOrder,
+  IOrder,
   OrderStatus,
 } from '../../src/components/order/order.interfaces';
-import { ICreateProduct, IProduct } from '../../src/components/product/product.interfaces';
+import Order from '../../src/components/order/order.model';
+import { ICreateProduct } from '../../src/components/product/product.interfaces';
 import {
   ICreateUser,
   IUserSerialized,
 } from '../../src/components/user/user.interfaces';
-import Logger from '../../src/middlewares/logger';
+import User from '../../src/components/user/user.model';
 import Common from '../../src/utils/common';
 
 const truncateDB = async () => {
   await Common.dbTruncate();
+};
+const getRandomUser = () => {
+  const randomId = Math.floor(Math.random() * 1000);
+  const user: ICreateUser = {
+    firstname: 'test',
+    lastname: 'test',
+    email: `test-${randomId}@test.com`,
+    password: '12345678',
+  };
+  return user;
 };
 
 const signup = async (email?: string, password?: string) => {

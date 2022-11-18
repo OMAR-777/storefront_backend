@@ -72,7 +72,6 @@ describe('[E2E] Product endpoints', function () {
 });
 
 describe('Testing the Product model', function () {
-  const tableName = Product.tableName;
   describe('Testing create function', function () {
     beforeEach(async () => {
       await truncateDB();
@@ -92,8 +91,8 @@ describe('Testing the Product model', function () {
   describe('Testing findAll function', function () {
     beforeEach(async () => {
       await truncateDB();
-      await Common.dbInsertion(tableName, { name: 'test1', price: 2.99 });
-      await Common.dbInsertion(tableName, { name: 'test2', price: 3.99 });
+      await Common.dbInsertion(Product.tableName, { name: 'test1', price: 2.99 });
+      await Common.dbInsertion(Product.tableName, { name: 'test2', price: 3.99 });
     });
 
     it('gets all products', async function () {
@@ -108,7 +107,7 @@ describe('Testing the Product model', function () {
     let newProduct: IProduct;
     beforeEach(async () => {
       await truncateDB();
-      const insertQuery = await Common.dbInsertion(tableName, {
+      const insertQuery = await Common.dbInsertion(Product.tableName, {
         name: 'test1',
         price: 2.99,
       });
@@ -128,7 +127,7 @@ describe('Testing the Product model', function () {
     let newProduct: IProduct;
     beforeEach(async () => {
       await truncateDB();
-      const insertQuery = await Common.dbInsertion(tableName, {
+      const insertQuery = await Common.dbInsertion(Product.tableName, {
         name: 'test1',
         price: 2.99,
       });
