@@ -12,4 +12,14 @@ export const checkingEnvVariables = () => {
     // either of them should be defined
     throw new Error('DB_NAME must be defined!');
   }
+
+  if(!process.env.NODE_PORT){
+    // either of them should be defined
+    throw new Error('NODE_PORT must be defined!');
+  }
+
+  if(!process.env.DB_PORT){
+    // either of them should be defined
+    throw new Error('DB_PORT must be defined!');
+  }
 };
