@@ -2,6 +2,8 @@ import app from '../../../app';
 import supertest from 'supertest';
 import { truncateDB, signup } from '../../../spec/utils';
 import { ICreateUser, IUserSerialized } from './user.interfaces';
+import User from './user.model';
+import Common from '../../utils/common';
 
 describe('[E2E] User endpoinds', function () {
   describe('Testing the signup endpoint', function () {
@@ -12,7 +14,7 @@ describe('[E2E] User endpoinds', function () {
     // Success scenarios
     it('creates an account', async function () {
       // status code should be 201 `Created`
-      const user1 : ICreateUser= {
+      const user1: ICreateUser = {
         firstname: 'test',
         lastname: 'test',
         email: 'test@test.com',
@@ -25,23 +27,27 @@ describe('[E2E] User endpoinds', function () {
     // Failure scenarios
     it('returns 400 if an account existed with the same email address', async function () {
       // status code should be 201 `Created`
-      const createdUser1 : ICreateUser= {
+      const createdUser1: ICreateUser = {
         firstname: 'test',
         lastname: 'test',
         email: 'test@test.com',
         password: '12345678',
       };
-      const createdUser2 : ICreateUser= {
+      const createdUser2: ICreateUser = {
         firstname: 'test',
         lastname: 'test',
         email: 'test@test.com',
         password: '12345678',
       };
-      const createUser1Response = await supertest(app).post('/users').send(createdUser1);
+      const createUser1Response = await supertest(app)
+        .post('/users')
+        .send(createdUser1);
       expect(createUser1Response.statusCode).toBe(201);
 
       // status code should be 400
-      const createUser2Response = await supertest(app).post('/users').send(createdUser2);
+      const createUser2Response = await supertest(app)
+        .post('/users')
+        .send(createdUser2);
       expect(createUser2Response.statusCode).toBe(400);
     });
   });
@@ -56,7 +62,6 @@ describe('[E2E] User endpoinds', function () {
 
     // Success scenarios
     it('logs user in', async function () {
-
       const response = await supertest(app).post('/users/login').send({
         email: loginEmail,
         password: loginPassword,
@@ -66,14 +71,11 @@ describe('[E2E] User endpoinds', function () {
 
     // Failure scenarios
     it('returns 400 when trying to login with invalid credintials', async function () {
-
       const invalidPassword = loginPassword + 'blaabla';
-      const response = await supertest(app)
-        .post('/users/login')
-        .send({
-          email: loginEmail,
-          password: invalidPassword,
-        });
+      const response = await supertest(app).post('/users/login').send({
+        email: loginEmail,
+        password: invalidPassword,
+      });
       expect(response.statusCode).toBe(400);
     });
   });
@@ -82,7 +84,7 @@ describe('[E2E] User endpoinds', function () {
     let authToken = '';
     beforeEach(async () => {
       await truncateDB();
-      let {token} = await signup();
+      let { token } = await signup();
       authToken = token;
     });
 
@@ -106,7 +108,7 @@ describe('[E2E] User endpoinds', function () {
     let authToken = '';
     beforeEach(async () => {
       await truncateDB();
-      let {token} = await signup();
+      let { token } = await signup();
       authToken = token;
     });
 
@@ -131,14 +133,13 @@ describe('[E2E] User endpoinds', function () {
     let createdUser: IUserSerialized;
     beforeEach(async () => {
       await truncateDB();
-      let {token, user} = await signup();
+      let { token, user } = await signup();
       authToken = token;
       createdUser = user;
     });
 
     // Success scenarios
     it('gets user', async function () {
-
       const id = createdUser.id;
       const response = await supertest(app)
         .get('/users/' + id)
@@ -149,7 +150,6 @@ describe('[E2E] User endpoinds', function () {
 
     // Failure scenarios
     it('returns 401 when trying to get user by id endpoint without logging in', async function () {
-
       const id = createdUser.id;
       const response = await supertest(app)
         .get('/users/' + id)
@@ -162,9 +162,8 @@ describe('[E2E] User endpoinds', function () {
     let authToken = '';
     beforeEach(async () => {
       await truncateDB();
-      let {token} = await signup();
+      let { token } = await signup();
       authToken = token;
-
     });
 
     // Success scenarios
@@ -190,7 +189,7 @@ describe('[E2E] User endpoinds', function () {
     });
 
     // Failure scenarios
-    it('returns 401 when trying to access users endpoint without logging in', async function () {
+    it('returns 401 when trying to add users without logging in', async function () {
       const user1 = {
         firstname: 'test',
         lastname: 'test',
@@ -207,6 +206,95 @@ describe('[E2E] User endpoinds', function () {
         .post('/users/createMany')
         .send([user1, user2]);
       expect(response.statusCode).toBe(401);
+    });
+  });
+});
+
+describe('Testing the User model', function () {
+  describe('Testing create function', function () {
+    beforeEach(async () => {
+      await truncateDB();
+    });
+
+    it('creates a user', async function () {
+      const user: ICreateUser = {
+        firstname: 'testy',
+        lastname: 'test',
+        email: 'test@gmail.com',
+        password: '12345678',
+      };
+      const newUser = await User.create(user);
+      expect(newUser).toBeDefined();
+      expect(newUser).not.toBeNull();
+    });
+  });
+
+  describe('Testing findAll function', function () {
+    beforeEach(async () => {
+      await truncateDB();
+      await Common.dbInsertion(User.tableName, {
+        firstname: 'testy',
+        lastname: 'test',
+        email: 'test1@gmail.com',
+        password: '12345678',
+      });
+      await Common.dbInsertion(User.tableName, {
+        firstname: 'testo',
+        lastname: 'test',
+        email: 'test2@gmail.com',
+        password: '12345678',
+      });
+    });
+
+    it('gets all users', async function () {
+      const users = await User.findAll();
+      expect(users).toBeDefined();
+      expect(users).not.toBeNull();
+      expect(users.length).toEqual(2);
+    });
+  });
+
+  describe('Testing findOneById function', function () {
+    let newUser: IUserSerialized;
+    beforeEach(async () => {
+      await truncateDB();
+      const userInsert = await Common.dbInsertion(User.tableName, {
+        firstname: 'testy',
+        lastname: 'test',
+        email: 'test@gmail.com',
+        password: '12345678',
+      });
+      if (userInsert && userInsert.inserted) {
+        newUser = userInsert.data[0] as IUserSerialized;
+      }
+    });
+
+    it('gets a user by id', async function () {
+      const user = await User.findOneById(newUser.id);
+      expect(user).toBeDefined();
+      expect(user).not.toBeNull();
+    });
+  });
+
+  describe('Testing findOneByEmail function', function () {
+    let newUser: IUserSerialized;
+    beforeEach(async () => {
+      await truncateDB();
+      const userInsert = await Common.dbInsertion(User.tableName, {
+        firstname: 'testy',
+        lastname: 'test',
+        email: 'test@gmail.com',
+        password: '12345678',
+      });
+      if (userInsert && userInsert.inserted) {
+        newUser = userInsert.data[0] as IUserSerialized;
+      }
+    });
+
+    it('gets a user by email', async function () {
+      const user = await User.findOneByEmail(newUser.email);
+      expect(user).toBeDefined();
+      expect(user).not.toBeNull();
     });
   });
 });

@@ -17,16 +17,16 @@ import Common from '../../src/utils/common';
 const truncateDB = async () => {
   await Common.dbTruncate();
 };
-const getRandomUser = () => {
-  const randomId = Math.floor(Math.random() * 1000);
-  const user: ICreateUser = {
-    firstname: 'test',
-    lastname: 'test',
-    email: `test-${randomId}@test.com`,
-    password: '12345678',
-  };
-  return user;
-};
+// const getRandomUser = () => {
+//   const randomId = Math.floor(Math.random() * 1000);
+//   const user: ICreateUser = {
+//     firstname: 'test',
+//     lastname: 'test',
+//     email: `test-${randomId}@test.com`,
+//     password: '12345678',
+//   };
+//   return user;
+// };
 
 const signup = async (email?: string, password?: string) => {
   try {
