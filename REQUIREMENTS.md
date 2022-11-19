@@ -35,7 +35,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - password
 
 SQL Schema:
-```
+```sql
 users (
   id SERIAL,
   firstname VARCHAR(255) NOT NULL,
@@ -53,7 +53,7 @@ users (
 - price
 
 SQL Schema:
-```
+```sql
 products (
   id SERIAL,
   name VARCHAR(255) NOT NULL UNIQUE,
@@ -69,7 +69,7 @@ products (
 - user_id
 
 SQL Schema:
-```
+```sql
 orders (
     id SERIAL PRIMARY KEY,
     status VARCHAR(15),
@@ -85,7 +85,7 @@ orders (
 - product_id
 
 SQL Schema:
-```
+```sql
 order_products (
     id SERIAL PRIMARY KEY,
     quantity integer,
