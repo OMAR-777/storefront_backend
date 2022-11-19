@@ -10,7 +10,7 @@
 
 ## Description
 
-a Udacity Typescript Project called Storefront Backend, covers the topic creating an API with PostgreSQL and Express.\
+a Udacity Typescript Project called Storefront Backend, covers the topic of creating an API with PostgreSQL and Express.\
 It features the use of **Typescript**, **Sequelize**, **PostgreSQL**, **Jasmine**, **Winston & Morgan**, **Joi**, and **Eslint**.
 
 ## Prerequisites
