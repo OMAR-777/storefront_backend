@@ -10,7 +10,7 @@
 
 ## Description
 
-a Udacity Typescript Project called Storefront Backend, covers the topic creating an API with PostgreSQL and Express.
+a Udacity Typescript Project called Storefront Backend, covers the topic creating an API with PostgreSQL and Express.\
 It features the use of **Typescript**, **Sequelize**, **PostgreSQL**, **Jasmine**, **Winston & Morgan**, **Joi**, and **Eslint**.
 
 ## Prerequisites
@@ -52,6 +52,7 @@ run the following command to create an .env file from .env.example.
 ```
 cp .env.example .env
 ```
+
 Replace environment variables with your credentials if needed.
 
 
@@ -61,8 +62,13 @@ Run the following script for creating the devolopment and testing databases spec
 ``` 
 npm run create-dbs
 ```
+or via PSQL:
+```
+CREATE DATABASE storefront_db;
+CREATE DATABASE storefront_test_db;
+```
 
-then run the following script to apply the migrations and add the required tables to the database.
+after creation, run the following script to apply the migrations and add the required tables to the database.
 
 ``` 
 npm run migrate:up
