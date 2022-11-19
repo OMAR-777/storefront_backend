@@ -26,11 +26,10 @@ After Cloning the project, head inside the project folder and run
 npm install
 ```
 
-### 2. Configuration
-
 ### Ports
 the app runs on port 3000 and the database runs on port 5432.
 
+### 2. Configuration
 This is .env.example file provided in the repo of what .env file should look like.
 ```
 # dev | test | prod
