@@ -19,11 +19,11 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 - Create Order [token required] `POST: /orders/create`
-- Current Order by user (args: user id)[token required] `GET: /orders/cart`
+- Current Order by user [token required] `GET: /orders/cart`
 - Add Order products [token required] `POST: /orders/:id/products`
 - Get Order products [token required] `GET: /orders/:id/products`
 - Complete Order [token required] `POST: /orders/:id/complete`
-- Completed Orders by user (args: user id)[token required] `GET: /orders`
+- Completed Orders by user [token required] `GET: /orders`
 
 ## Data Shapes
 #### Product
