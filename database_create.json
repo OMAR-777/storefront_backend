@@ -1,0 +1,10 @@
+{
+    "defaultEnv": "local",
+    "local": {
+      "driver": "pg",
+      "user": {"ENV": "DB_USERNAME"},
+      "password": {"ENV": "DB_PASSWORD"},
+      "host": "localhost",
+      "schema": "public"
+    }
+  }

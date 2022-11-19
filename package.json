@@ -13,6 +13,7 @@
     "migrate:reset": "db-migrate reset",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
+    "create-dbs": "source .env && db-migrate --config database_create.json db:create ${DB_NAME} && db-migrate --config database_create.json db:create ${DB_TEST_NAME}",
     "test": "export NODE_ENV=test && npm run migrate:up > /dev/null && jasmine-ts && npm run migrate:reset > /dev/null"
   },
   "license": "ISC",

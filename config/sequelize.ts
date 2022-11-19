@@ -20,7 +20,7 @@ if (process.env.NODE_ENV == 'test'){
   env variables are passed or not when the server starts
   refer to checking-env-variables.ts for reference
 */
-const sequelize = new Sequelize(config.database!, config.username!, config.password, {
+const sequelize = new Sequelize(config.database!, config.username!, config.password!, {
   host: config.host,
   port: config.port,
   dialect: 'postgres',
