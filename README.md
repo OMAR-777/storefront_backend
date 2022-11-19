@@ -51,6 +51,7 @@ cp .env.example .env
 Replace environment variables with your credentials if needed.
 
 
+
 ### 2.  DB Creation and Migrations
 Run the following script for creating the devolopment and testing databases specified in the .env file.
 ``` 
