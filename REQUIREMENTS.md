@@ -26,28 +26,16 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Completed Orders by user [token required] `GET: /orders`
 
 ## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
 
-#### User
+#### Users
 - id
 - firstName
 - lastName
+- email
 - password
 
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
-
-## Data Shapes
-
-#### Users
+SQL Schema:
+```
 users (
   id SERIAL,
   firstname VARCHAR(255) NOT NULL,
@@ -57,8 +45,15 @@ users (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
+```
 
 #### Products
+-  id
+- name
+- price
+
+SQL Schema:
+```
 products (
   id SERIAL,
   name VARCHAR(255) NOT NULL UNIQUE,
@@ -66,16 +61,31 @@ products (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
+```
 
 #### Orders
+- id
+- status of order (active or complete)
+- user_id
+
+SQL Schema:
+```
 orders (
     id SERIAL PRIMARY KEY,
     status VARCHAR(15),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     user_id bigint REFERENCES users(id) ON DELETE CASCADE
 );
+```
 
 ## Order Products
+- id
+- quantity
+- order_id
+- product_id
+
+SQL Schema:
+```
 order_products (
     id SERIAL PRIMARY KEY,
     quantity integer,
@@ -83,5 +93,6 @@ order_products (
     order_id bigint REFERENCES orders(id) ON DELETE CASCADE,
     product_id bigint REFERENCES products(id) ON DELETE CASCADE
 );
+```
 
 
