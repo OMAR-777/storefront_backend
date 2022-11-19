@@ -17,20 +17,6 @@ It features the use of **Typescript**, **Sequelize**, **PostgreSQL**, **Jasmine*
 Your machine must have the following installed on it:
 - [Node/NPM](https://nodejs.org/en/download/) (v16 or higher)
 
-## Configuration
-This is an example provided in the repo of what .env file should look like, if the following env variables are used, the app runs on port 3000 and the database runs on port 5432.
-```
-# dev | test | prod
-NODE_ENV=dev
-NODE_PORT=3000
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=storefront_db
-DB_TEST_NAME=storefront_test_db
-DB_USERNAME=postgres
-DB_PASSWORD=12345678
-JWT_KEY=some_random_key
-```
 
 ## Instructions
 
