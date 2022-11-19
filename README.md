@@ -17,6 +17,8 @@ It features the use of **Typescript**, **Sequelize**, **PostgreSQL**, **Jasmine*
 Your machine must have the following installed on it:
 - [Node/NPM](https://nodejs.org/en/download/) (v16 or higher)
 
+## Ports
+with the .env.example provided in the repo, the backend runs on port 3000 and the database runs on port 5432.
 
 ## Instructions
 ### 1. Clone the repository
@@ -30,8 +32,6 @@ After Cloning the project, head inside the project folder and run
 npm install
 ```
 
-### Ports
-the app runs on port 3000 and the database runs on port 5432.
 
 ### 3. Configuration
 This is .env.example file provided in the repo of what .env file should look like.
@@ -53,7 +53,7 @@ run the following command to create an .env file from .env.example.
 cp .env.example .env
 ```
 
-Replace environment variables with your credentials if needed.
+Replace environment variables with your credentials (if needed).
 
 
 
