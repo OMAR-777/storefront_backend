@@ -1,6 +1,8 @@
+/* eslint-disable max-len */
 import express, { Request, Response } from 'express';
 
-// to pass the async errors to the error handler automatically
+// no need to wrap every function with try catch{next} as this package will solve this issue automatically
+// passes the async errors to the error handler automatically
 // without the need to use next() with every route
 import 'express-async-errors';
 
