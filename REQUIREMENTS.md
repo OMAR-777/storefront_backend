@@ -27,7 +27,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## Data Shapes
 
-#### Users
+### Users
 - id
 - firstName
 - lastName
@@ -47,7 +47,7 @@ users (
 );
 ```
 
-#### Products
+### Products
 -  id
 - name
 - price
@@ -63,7 +63,7 @@ products (
 );
 ```
 
-#### Orders
+### Orders
 - id
 - status of order (active or complete)
 - user_id
@@ -78,7 +78,7 @@ orders (
 );
 ```
 
-## Order Products
+### Order Products
 - id
 - quantity
 - order_id
