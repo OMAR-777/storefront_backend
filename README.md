@@ -19,8 +19,12 @@ Your machine must have the following installed on it:
 
 
 ## Instructions
+### 1. Clone the repository
+```
+git clone https://github.com/OMAR-777/storefront_backend.git
+```
 
-### 1. Install Dependencies
+### 2. Install Dependencies
 After Cloning the project, head inside the project folder and run
 ```
 npm install
@@ -29,7 +33,7 @@ npm install
 ### Ports
 the app runs on port 3000 and the database runs on port 5432.
 
-### 2. Configuration
+### 3. Configuration
 This is .env.example file provided in the repo of what .env file should look like.
 ```
 # dev | test | prod
@@ -52,7 +56,7 @@ Replace environment variables with your credentials if needed.
 
 
 
-### 3.  DB Creation and Migrations
+### 4.  DB Creation and Migrations
 Run the following script for creating the devolopment and testing databases specified in the .env file.
 ``` 
 npm run create-dbs
@@ -64,12 +68,12 @@ then run the following script to apply the migrations and add the required table
 npm run migrate:up
 ```
 
-### 4. Starting the project
+### 5. Starting the project
 ```
 npm start
 ```
 
-### 5. Running the tests
+### 6. Running the tests
 ```
 npm test
 ```
