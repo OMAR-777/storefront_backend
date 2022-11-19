@@ -5,49 +5,37 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
+- Index `GET: /products`
+- Show `GET: /products/:id`
+- Create [token required] `POST: /products`
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Get User Profile [token required]
-- Login
-- Sign Up
-- Create N[token required]
+- Index [token required] `GET: /users`
+- Show [token required] `GET: /users/:id`
+- Get User Profile [token required] `GET: /users/me`
+- Login `POST: /users/login`
+- Sign Up `POST: /users`
+- Create N[token required] `POST: /users/createMany`
 
 #### Orders
-- Create Order [token required]
-- Current Order by user (args: user id)[token required]
-- Add Order products [token required]
-- Get Order products [token required]
-- Complete Order [token required]
-- Completed Orders by user (args: user id)[token required]
+- Create Order [token required] `POST: /orders/create`
+- Current Order by user [token required] `GET: /orders/cart`
+- Add Order products [token required] `POST: /orders/:id/products`
+- Get Order products [token required] `GET: /orders/:id/products`
+- Complete Order [token required] `POST: /orders/:id/complete`
+- Completed Orders by user [token required] `GET: /orders`
 
 ## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
 
-#### User
+### Users
 - id
 - firstName
 - lastName
+- email
 - password
 
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
-
-## Data Shapes
-
-#### Users
+SQL Schema:
+```
 users (
   id SERIAL,
   firstname VARCHAR(255) NOT NULL,
@@ -57,8 +45,15 @@ users (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
+```
 
-#### Products
+### Products
+-  id
+- name
+- price
+
+SQL Schema:
+```
 products (
   id SERIAL,
   name VARCHAR(255) NOT NULL UNIQUE,
@@ -66,16 +61,31 @@ products (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
+```
 
-#### Orders
+### Orders
+- id
+- status of order (active or complete)
+- user_id
+
+SQL Schema:
+```
 orders (
     id SERIAL PRIMARY KEY,
     status VARCHAR(15),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     user_id bigint REFERENCES users(id) ON DELETE CASCADE
 );
+```
 
-## Order Products
+### Order Products
+- id
+- quantity
+- order_id
+- product_id
+
+SQL Schema:
+```
 order_products (
     id SERIAL PRIMARY KEY,
     quantity integer,
@@ -83,5 +93,6 @@ order_products (
     order_id bigint REFERENCES orders(id) ON DELETE CASCADE,
     product_id bigint REFERENCES products(id) ON DELETE CASCADE
 );
+```
 
 
