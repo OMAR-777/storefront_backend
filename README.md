@@ -10,12 +10,27 @@
 
 ## Description
 
-This is a boilerplate Project for Typescript.
+a Udacity Typescript Project called Storefront Backend, covers the topic creating an API with PostgreSQL and Express.
 It features the use of **Typescript**, **Sequelize**, **PostgreSQL**, **Jasmine**, **Winston & Morgan**, **Joi**, and **Eslint**.
 
 ## Prerequisites
 Your machine must have the following installed on it:
 - [Node/NPM](https://nodejs.org/en/download/) (v16 or higher)
+
+## Configuration
+This is an example provided in the repo of what .env file should look like, if the following env variables are used, the app runs on port 3000 and the database runs on port 5432.
+```
+# dev | test | prod
+NODE_ENV=dev
+NODE_PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=storefront_db
+DB_TEST_NAME=storefront_test_db
+DB_USERNAME=postgres
+DB_PASSWORD=12345678
+JWT_KEY=some_random_key
+```
 
 ## Instructions
 
@@ -25,11 +40,38 @@ After Cloning the project, head inside the project folder and run
 npm install
 ```
 
-### 2.  DB Creation and Migrations
+### Ports
+the app runs on port 3000 and the database runs on port 5432.
+
+### Configuration
+This is .env.example file provided in the repo of what .env file should look like.
+```
+# dev | test | prod
+NODE_ENV=dev
+NODE_PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=storefront_db
+DB_TEST_NAME=storefront_test_db
+DB_USERNAME=postgres
+DB_PASSWORD=12345678
+JWT_KEY=some_random_key
+```
+
+run the following command to create an .env file from .env.example.
 ```
 cp .env.example .env
 ```
-Now, replace .env with your credentials and then run
+Replace environment variables with your credentials if needed.
+
+
+### 2.  DB Creation and Migrations
+Run the following script for creating the devolopment and testing databases specified in the .env file.
+``` 
+npm run create-dbs
+```
+
+then run the following script to apply the migrations and add the required tables to the database.
 
 ``` 
 npm run migrate:up
